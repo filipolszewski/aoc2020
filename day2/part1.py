@@ -1,23 +1,55 @@
-def main():
-    """ Main program """
+def entry_valid_according_to_old_system(line):
+    password_entry = line.split(": ")
+    password = password_entry[1]
 
+    policy_entry = password_entry[0].split(" ")
+    policy_char = policy_entry[1]
+
+    policy_values = policy_entry[0].split("-")
+    min_count, max_count = int(policy_values[0]), int(policy_values[1])
+
+    return min_count <= password.count(policy_char) <= max_count
+
+
+def logical_xor(a, b):
+    return (a or b) and not (a and b)
+
+
+def entry_valid_according_to_the_actual_system(line):
+    password_entry = line.split(": ")
+    password = password_entry[1]
+
+    policy_entry = password_entry[0].split(" ")
+    policy_char = policy_entry[1]
+
+    policy_values = policy_entry[0].split("-")
+    first_position, second_position = int(policy_values[0]) - 1, int(policy_values[1]) - 1
+
+    char_on_first = password[first_position] == policy_char
+    char_on_second = password[second_position] == policy_char
+
+    return logical_xor(char_on_first, char_on_second)
+
+
+def main():
     with open("input.txt", 'r') as data:
-        report_lines = [int(line.strip()) for line in data.readlines()]
+        lines = [line.strip() for line in data.readlines()]
 
     # part 1
-    needed_numbers = set()
-    for i, number in enumerate(report_lines):
-        if number in needed_numbers:
-            print(number * (2020 - number))
-        needed_numbers.add(2020 - number)
+    result = 0
+    for line in lines:
+        if entry_valid_according_to_old_system(line):
+            result += 1
+    print(result)
 
     # part 2
-    for i in range(len(report_lines)):
-        for j in range(len(report_lines)):
-            for k in range(len(report_lines)):
-                if i != j != k and (report_lines[i] + report_lines[j] + report_lines[k]) == 2020:
-                    print(report_lines[i] * report_lines[j] * report_lines[k])
-                    return
+
+    result = 0
+    for line in lines:
+        if entry_valid_according_to_the_actual_system(line):
+            result += 1
+    print(result)
+
     return
 
 
