@@ -25,11 +25,10 @@ def get_closest_seat(x, y, x_d, y_d, seats_map):
 
 def get_eyesight_occupied_seats_count(x, y, seats_map):
     occupied_cnt = 0
-    for i in range(-1, 2):
-        for j in range(-1, 2):
-            if not (i == 0 and j == 0):
-                if get_closest_seat(x, y, i, j, seats_map) == "#":
-                    occupied_cnt += 1
+    for i in (-1, 0, 1):
+        for j in range(-1, 0, 1):
+            if not (i == 0 and j == 0) and get_closest_seat(x, y, i, j, seats_map) == "#":
+                occupied_cnt += 1
     return occupied_cnt
 
 
@@ -86,7 +85,6 @@ transforms = {'.': floor_transform, "#": occupied_seat_transform, "L": empty_sea
 # Part 1
 tolerance = 4
 occupied_counter = get_adjacent_occupied_seats_count
-
 print(get_occupied_seats_after_stabilisation(seat_map))
 
 # Part 2
