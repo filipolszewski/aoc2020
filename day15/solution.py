@@ -3,15 +3,11 @@ with open("input.txt", 'r') as data:
 
 N = 30000000
 last_place = {number: i for i, number in enumerate(starting_numbers)}
-number = None
-i = len(starting_numbers) - 1
-while i != N - 1:
-    if number is not None and number in last_place.keys():
-        new_number = i - last_place[number]
-    else:
-        new_number = 0
+number = 0
+
+for i in range(len(starting_numbers), N - 1):
+    new_number = 0 if number not in last_place.keys() else i - last_place[number]
     last_place[number] = i
     number = new_number
-    i += 1
 
 print(number)
