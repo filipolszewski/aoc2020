@@ -1,9 +1,13 @@
+# not proud of this one, didn't have time for any 'generic' code
+# + lots of day11 reused
+
 def get_from_cube_map(x, y, z, w, cube_map):
     if x < 0 or x >= len(cube_map[0][0][0]) or y < 0 or y >= len(cube_map[0][0]) or z < 0 or z >= len(
-        cube_map[0]) or w < 0 or w >= len(cube_map):
+            cube_map[0]) or w < 0 or w >= len(cube_map):
         return "."
     else:
         return cube_map[w][z][y][x]
+
 
 def get_active_neighbours_count(x, y, z, w, cube_map):
     active_cnt = 0
